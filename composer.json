@@ -1,0 +1,9 @@
+{
+  "name": "drupal/simple_sqlite_vacuum",
+  "type": "drupal-module",
+  "description": "A simple module that vacuums sqlite database connections daily",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://github.com/freethoughtdesign/sqlite_vacuum",
+  "minimum-stability": "dev"
+}

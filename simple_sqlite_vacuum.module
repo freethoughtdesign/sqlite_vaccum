@@ -1,0 +1,24 @@
+<?php
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_cron().
+ */
+function simple_sqlite_vacuum_cron() {
+  // Vacuum the sqlite databases daily. This must be done from within Drupal
+  // because the sqlite driver uses a custom collation. See
+  // https://www.drupal.org/project/drupal/issues/3036487
+  if (\Drupal::time()->getCurrentTime() - Drupal::state()->get('simple_sqlite_vacuum.last_vacuum', 0) > (60 * 60 * 24)) {
+    foreach (Database::getAllConnectionInfo() as $database_key => $targets) {
+      foreach ($targets as $target => $settings) {
+        if ($settings['driver'] === 'sqlite') {
+          Database::getConnection($target, $database_key)->query('VACUUM;');
+        }
+      }
+    }
+
+    \Drupal::state()->set('simple_sqlite_vacuum.last_vacuum', \Drupal::time()->getRequestTime());
+    \Drupal::logger('sqlite_vacuum')->info('Vacuumed database(s).');
+  }
+}
