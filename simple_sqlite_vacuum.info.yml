@@ -1,4 +1,4 @@
 name: Simple Sqlite Vacuum
 type: module
 description: 'A simple module that vacuums all sqlite database connections daily.'
-core_version_requirement: ^8 || ^9 || ^10
+core_version_requirement: ^8 || ^9 || ^10 || ^11
